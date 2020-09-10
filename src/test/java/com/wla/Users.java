@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 
 public class Users {
     @Test(dataProvider = "CreateUser", dataProviderClass = UserDataProvider.class)
-    public void AddUser(String branchName, String branchAdmin, String branchPassword, String user, String password){
+    public void AddUser(String branchName, String branchAdmin, String branchPassword, String user, String password, String errorMessage){
         WebDriver driver = new ChromeDriver();
         Login login = new Login();
         login.WLALogin(driver, branchName, branchAdmin, branchPassword);
@@ -23,7 +23,7 @@ public class Users {
         driver.findElement(By.name("Username")).sendKeys(user);
         driver.findElement(By.name("Password")).sendKeys(password);
         try{
-            Thread.sleep(5000);
+            Thread.sleep(3000);
         } catch(InterruptedException e){
             e.printStackTrace();
         }
@@ -34,10 +34,32 @@ public class Users {
         } catch (InterruptedException e){
             e.printStackTrace();
         }
-        //verify user was created
-        WebElement body = driver.findElement(By.tagName("body"));
-        boolean ret = body.getText().contains(user);
-        System.out.println("The user was created: " + ret);
+
+        if(!errorMessage.equals("")){
+            //verify the correct error message appears
+            WebElement body = driver.findElement(By.tagName("body"));
+            boolean ret = body.getText().contains(errorMessage);
+            System.out.println("The error message is correct: " + ret);
+            //click OK button
+            driver.findElement(By.xpath("//div[2]/div/div/div/div/div/table/tbody/tr/td/table/tbody/tr/td[2]/em/button")).click();
+            //click Cancel button
+            driver.findElement(By.xpath("//div[5]/div/div[2]/div/div/table/tbody/tr/td[2]/table/tbody/tr/td[2]")).click();
+
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e){
+                e.printStackTrace();
+            }
+
+
+        } else {
+            //verify user was created
+            WebElement body = driver.findElement(By.tagName("body"));
+            boolean ret = body.getText().contains(user);
+            System.out.println("The user was created: " + ret);
+
+        }
+
         //logout
         driver.findElement(By.xpath("//td[4]/table/tbody/tr/td[2]/em/button")).click();
         //close the browser
