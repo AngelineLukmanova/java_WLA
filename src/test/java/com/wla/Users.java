@@ -1,5 +1,6 @@
 package com.wla;
 
+import com.dataprovider.UserDataProvider;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -7,11 +8,11 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.Test;
 
 public class Users {
-    @Test
-    public void AddUser(){
+    @Test(dataProvider = "CreateUser", dataProviderClass = UserDataProvider.class)
+    public void AddUser(String branchName, String branchAdmin, String branchPassword, String user, String password){
         WebDriver driver = new ChromeDriver();
         Login login = new Login();
-        login.WLALogin(driver);
+        login.WLALogin(driver, branchName, branchAdmin, branchPassword);
         //click button Users
         driver.findElement(By.id("ext-gen185")).click();
         //click button Actions
@@ -19,8 +20,8 @@ public class Users {
         //select Add User menu item
         driver.findElement(By.linkText("Add User")).click();
         //enter Username, Password
-        driver.findElement(By.name("Username")).sendKeys("jsmith");
-        driver.findElement(By.name("Password")).sendKeys("password");
+        driver.findElement(By.name("Username")).sendKeys(user);
+        driver.findElement(By.name("Password")).sendKeys(password);
         try{
             Thread.sleep(5000);
         } catch(InterruptedException e){
@@ -35,7 +36,7 @@ public class Users {
         }
         //verify user was created
         WebElement body = driver.findElement(By.tagName("body"));
-        boolean ret = body.getText().contains("jsmith");
+        boolean ret = body.getText().contains(user);
         System.out.println("The user was created: " + ret);
         //logout
         driver.findElement(By.xpath("//td[4]/table/tbody/tr/td[2]/em/button")).click();
