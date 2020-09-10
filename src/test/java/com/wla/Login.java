@@ -8,8 +8,7 @@ import org.testng.annotations.Test;
 
 public class Login {
     @Test
-    public void WLALogin(){
-        WebDriver driver = new ChromeDriver();
+    public void WLALogin(WebDriver driver){
         //open a new WLA page
         driver.get("https://www.qa-hitekschool.com/lms/loans/2108");
         //read the title of the page and output it into results
