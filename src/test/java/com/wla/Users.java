@@ -10,7 +10,7 @@ import pageobject.AddUserPage;
 import pageobject.HomePage;
 import pageobject.UsersPage;
 
-public class Users {
+public class Users extends TestBase{
     @Test(dataProvider = "CreateUser", dataProviderClass = UserDataProvider.class)
     public void AddUser(String branchName, String branchAdmin, String branchPassword, String user, String password, String errorMessage){
         WebDriver driver = new ChromeDriver();
@@ -25,42 +25,23 @@ public class Users {
         usersPage.clickButtonAction(driver);
         usersPage.clickButtonAddUser(driver);
 
-        try{
-            Thread.sleep(3000);
-        } catch(InterruptedException e){
-            e.printStackTrace();
-        }
+        sleep(3000);
 
         addUserPage.setUsername(driver, user);
         addUserPage.setPassword(driver, password);
 
-        try{
-            Thread.sleep(3000);
-        } catch(InterruptedException e){
-            e.printStackTrace();
-        }
+        sleep(3000);
 
         addUserPage.clickButtonSave(driver);
 
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e){
-            e.printStackTrace();
-        }
+        sleep(10000);
 
         if(!errorMessage.equals("")){
             //verify the correct error message appears
-            WebElement body = driver.findElement(By.tagName("body"));
-            boolean ret = body.getText().contains(errorMessage);
-            System.out.println("The error message is correct: " + ret);
+            doesTextExistOnPage(errorMessage, driver);
             addUserPage.clickButtonOK(driver);
             addUserPage.clickButtonCancel(driver);
 
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e){
-                e.printStackTrace();
-            }
 
         } else {
             //verify user was created
@@ -75,4 +56,5 @@ public class Users {
         driver.close();
 
     }
+
 }

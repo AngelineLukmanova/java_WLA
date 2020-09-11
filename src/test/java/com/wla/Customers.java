@@ -10,10 +10,11 @@ import pageobject.AddCustomerPage;
 import pageobject.CustomersPage;
 import pageobject.HomePage;
 
-public class Customers {
+public class Customers extends TestBase {
     @Test(dataProvider = "CreateCustomer", dataProviderClass = CustomerDataProvider.class)
     public void AddCustomer(String branchName, String branchAdmin, String branchPassword,String firstName, String lastName, String errorMessage){
         WebDriver driver = new ChromeDriver();
+
         //create Objects required for this test
         Login login = new Login();
         login.WLALogin(driver, branchName, branchAdmin, branchPassword);
@@ -25,33 +26,19 @@ public class Customers {
         customersPage.clickButtonAction(driver);
         customersPage.clickButtonAddCustomer(driver);
 
-        try{
-            Thread.sleep(3000);
-        } catch(InterruptedException e){
-            e.printStackTrace();
-        }
+        sleep(3000);
 
         addCustomerPage.setFirstName(driver, firstName);
         addCustomerPage.setLastName(driver, lastName);
 
-        try{
-            Thread.sleep(3000);
-        } catch (InterruptedException e){
-            e.printStackTrace();
-        }
+        sleep(3000);
 
         addCustomerPage.clickButtonSave(driver);
 
-        try{
-            Thread.sleep(10000);
-        } catch (InterruptedException e){
-            e.printStackTrace();
-        }
+        sleep(10000);
 
         if(!errorMessage.equals("")){
-            WebElement body = driver.findElement(By.tagName("body"));
-            boolean ret = body.getText().contains(errorMessage);
-            System.out.println("The error message is correct: " + ret);
+            doesTextExistOnPage(errorMessage, driver);
             addCustomerPage.clickButtonOK(driver);
             addCustomerPage.clickButtonCancel(driver);
 
@@ -65,4 +52,5 @@ public class Customers {
         //close web browser
         driver.close();
     }
+
 }
