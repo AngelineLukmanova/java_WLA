@@ -6,9 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.Test;
-import pageobject.AddCustomerPage;
-import pageobject.CustomersPage;
-import pageobject.HomePage;
+
 
 public class Customers extends TestBase {
     @Test(dataProvider = "CreateCustomer", dataProviderClass = CustomerDataProvider.class)
@@ -18,29 +16,34 @@ public class Customers extends TestBase {
         //create Objects required for this test
         Login login = new Login();
         login.WLALogin(driver, branchName, branchAdmin, branchPassword);
-        CustomersPage customersPage = new CustomersPage(driver);
-        HomePage homePage = new HomePage(driver);
-        AddCustomerPage addCustomerPage = new AddCustomerPage(driver);
 
-        homePage.clickButtonCustomers(driver);
-        customersPage.clickButtonAction(driver);
-        customersPage.clickButtonAddCustomer(driver);
-
-        sleep(3000);
-
-        addCustomerPage.setFirstName(driver, firstName);
-        addCustomerPage.setLastName(driver, lastName);
+        //click button Customers
+        clickElementByID(driver, "ext-gen192");
+        //click button Action
+        clickElementByXpath(driver, "//td/table/tbody/tr/td[2]/em/button");
+        //select AddCustomer menu item
+        clickElementByLinkText(driver, "Add Customer");
 
         sleep(3000);
 
-        addCustomerPage.clickButtonSave(driver);
+        //enter First Name
+        setText(driver, "FirstName", firstName);
+        //enter Last Name
+        setText(driver, "LastName", lastName);
+
+        sleep(3000);
+
+        //click button Save
+        clickElementByXpath(driver, "//div[2]/div/div/div/div/div/div/div[2]/div/div/table/tbody/tr/td/table/tbody/tr/td[2]/em/button");
 
         sleep(10000);
 
         if(!errorMessage.equals("")){
             doesTextExistOnPage(errorMessage, driver);
-            addCustomerPage.clickButtonOK(driver);
-            addCustomerPage.clickButtonCancel(driver);
+            //click button OK
+            clickElementByXpath(driver, "//div[2]/div/div/div/div/div/table/tbody/tr/td/table/tbody/tr/td[2]/em/button");
+            //click button Cancel
+            clickElementByXpath(driver, "//div[2]/div/div/div/div/div/div/div[2]/div/div/table/tbody/tr/td[2]/table/tbody/tr/td[2]/em/button");
 
         } else{
             WebElement body = driver.findElement(By.tagName("body"));
@@ -48,7 +51,9 @@ public class Customers extends TestBase {
             System.out.println("New Customer was created: " + ret);
         }
 
-        customersPage.clickButtonLogout(driver);
+        //click button Logout
+        clickElementByXpath(driver, "//td[4]/table/tbody/tr/td[2]/em/button");
+
         //close web browser
         driver.close();
     }

@@ -5,7 +5,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import pageobject.LoginPage;
 
-public class Login {
+public class Login extends TestBase{
     @Test
     public void WLALogin(WebDriver driver, String branchName, String branchAdmin, String branchPassword){
         //create Objects required for this test
@@ -15,16 +15,13 @@ public class Login {
         //read the title of the page and output it into results
         System.out.println("Page title is: " + driver.getTitle());
 
-        loginPage.setBranchName(driver, branchName);
-        loginPage.setBranchAdmin(driver, branchAdmin);
-        loginPage.setBranchPassword(driver, branchPassword);
-        loginPage.clickLoginButtom(driver);
+        setText(driver, "j_branch", branchName);
+        setText(driver, "j_username", branchAdmin);
+        setText(driver, "j_password", branchPassword);
+        clickElementByID(driver, "ext-gen38");
 
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e){
-            e.printStackTrace();
-        }
+        sleep(13000);
+
         //verify the title of the page
         Assert.assertEquals(driver.getTitle(), "Loan Management System - '" + branchName +"' branch");
 
