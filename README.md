@@ -2,7 +2,7 @@
 
 ## Description Of The Product
 
-**"WebLoanApp"** is a web-based banking application used to evaluate eligibility of potential customer to get a loan. When bank employee (User) enters customer's monthly income and debt, WebLoanApp should automatically calculate maximum amount of loan eligible and monthly payments. System also allows creating and printing a letter that can be sent to the customer with Loan conditions. 
+**"WebLoanApp"** is a web-based banking application used to evaluate the eligibility of a potential customer to get a loan. When a bank employee (User) enters the customer's monthly income and debt, WebLoanApp should automatically calculate the maximum amount of loan eligible and monthly payments. The system also allows creating and printing a letter that can be sent to the customer with Loan conditions. 
 
 ![1](https://user-images.githubusercontent.com/64429543/92963681-b709dc00-f427-11ea-9b4e-b8286f74fcd1.png)
 
