@@ -17,7 +17,7 @@ public class HomePage {
     @FindBy(how = How.ID, using = "ext-gen185")
     private WebElement buttonUsers;
 
-    @FindBy(how = How.ID, using = "id=ext-gen192")
+    @FindBy(how = How.ID, using = "ext-gen192")
     private WebElement buttonCustomers;
 
     //METHODS
