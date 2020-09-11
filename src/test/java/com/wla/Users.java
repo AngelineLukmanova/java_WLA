@@ -22,10 +22,15 @@ public class Users {
         AddUserPage addUserPage = new AddUserPage(driver);
 
         homePage.clickButtonUsers(driver);
-
-
         usersPage.clickButtonAction(driver);
         usersPage.clickButtonAddUser(driver);
+
+        try{
+            Thread.sleep(3000);
+        } catch(InterruptedException e){
+            e.printStackTrace();
+        }
+
         addUserPage.setUsername(driver, user);
         addUserPage.setPassword(driver, password);
 

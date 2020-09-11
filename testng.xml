@@ -9,6 +9,11 @@
                     <include name="AddUser"/>
                 </methods>
             </class>
+            <class name="com.wla.Customers">
+                <methods>
+                    <include name="AddCustomer"/>
+                </methods>
+            </class>
         </classes>
     </test>
 </suite>
