@@ -40,3 +40,4 @@ hs_err_pid*
 .idea/**/dynamic.xml
 .idea/**/uiDesigner.xml
 .idea/**/dbnavigator.xml
+src/test/java/com/.DS_Store
